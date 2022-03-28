@@ -2,10 +2,14 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components"
-import { AddMeetup } from "../AddMeetup/AddMeetup";
+import { useNavigate, useParams } from 'react-router'
+// import { AddMeetup } from "../AddMeetup/AddMeetup";
 
 export const Home = () => {
   const [meet,setMeet] =useState([])
+  const navigate =useNavigate()
+  const {id} =useParams()
+
 
   useEffect(()=>{
     axios.get("http://localhost:8080/meetups").then((res)=>{
@@ -54,8 +58,8 @@ export const Home = () => {
           {meet
             .map((el) => {
               return (
-                <Link to={`add route here`} className="events">
-                  <Main>
+                <Link to={`meetup/${el.id}`} className="events">
+                  <Main key={el.id}>
                     <h2 className="title">{el.title} </h2>
                     <h4 className="theme">{el.theme}</h4>
                     <p className="description">{el.description}</p>
